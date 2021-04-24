@@ -11,32 +11,12 @@ package main
 
 import (
 	"log"
-	"net/http"
 
 	"gin-micro-tm/config"
-	"gin-micro-tm/model"
-
-	"github.com/gin-gonic/gin"
+	"gin-micro-tm/router"
 )
 
-// type Task struct {
-// 	Title string
-// 	Body  string
-// }
-
-func handleGetTasks(c *gin.Context) {
-	var tasks []model.Task
-	var task model.Task
-	task.Title = "Task one"
-	task.Body = "Task body"
-
-	tasks = append(tasks, task)
-	c.JSON(http.StatusOK, gin.H{"tasks": tasks})
-}
-
 func main() {
-	//log.Println("Hello from go")
-
 	var err error
 	// Setup database
 	config.DB, err = config.SetupDB()
@@ -49,7 +29,6 @@ func main() {
 	//This is a really nice way to free resources
 	defer config.DB.Close()
 
-	r := gin.Default()
-	r.GET("/tasks/", handleGetTasks)
-	r.Run()
+	r := router.NewRoutes()
+	log.Fatal(r.Run())
 }

@@ -10,13 +10,13 @@ import (
 
 // RoutesTask ...
 func RoutesTask(rg *gin.RouterGroup) {
-	post := rg.Group("/post")
+	route := rg.Group("/task")
 
-	post.GET("/:id", getPostByID)
-	post.GET("/", getPosts)
-	post.POST("/", createPost)
-	post.PUT("/", updatePost)
-	post.DELETE("/:id", deletePostByID)
+	//route.GET("/:id", getTaskByID)
+	route.GET("/", getTasks)
+	route.POST("/", createTask)
+	//route.PUT("/", updateTask)
+	//route.DELETE("/:id", deleteTaskByID)
 }
 
 func createTask(c *gin.Context) {
@@ -38,13 +38,12 @@ func createTask(c *gin.Context) {
 
 }
 
-func getAllTask(c *gin.Context) {
+func getTasks(c *gin.Context) {
 
-	var tasks []model.Task
-	var task model.Task
-	task.Title = "Task one"
-	task.Body = "Task body"
-
-	tasks = append(tasks, task)
-	c.JSON(http.StatusOK, gin.H{"tasks": tasks})
+	items, err := repository.GetItemAll()
+	if err != nil {
+		c.JSON(http.StatusConflict, gin.H{"message": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"items": items})
 }

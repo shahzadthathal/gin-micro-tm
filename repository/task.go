@@ -64,3 +64,22 @@ func GetItemByID(id int64) (model.Task, error) {
 
 	return item, nil
 }
+
+// GetItemAll ...
+func GetItemAll() ([]model.Task, error) {
+	db := config.DB
+	var task model.Task
+	var tasks []model.Task
+	rows, err := db.Query("select id, title, body from tasks")
+	if err != nil {
+		log.Println("Error query get all items: " + err.Error())
+		return tasks, err
+	}
+	for rows.Next() {
+		if err := rows.Scan(&task.ID, &task.Title, &task.Body); err != nil {
+			return tasks, err
+		}
+		tasks = append(tasks, task)
+	}
+	return tasks, nil
+}
