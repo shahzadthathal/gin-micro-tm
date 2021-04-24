@@ -27,6 +27,3 @@ POST Body
 	"body":"Second task body"
 }
 ```
-
-9.  Browse Swagger UI [http://localhost:8999/swagger/index.html](http://localhost:8999/swagger/index.html)
-
