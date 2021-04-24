@@ -30,8 +30,3 @@ POST Body
 
 9.  Browse Swagger UI [http://localhost:8999/swagger/index.html](http://localhost:8999/swagger/index.html)
 
-## Admin credentials
-```
-username: admin
-password: admin1234
-```
